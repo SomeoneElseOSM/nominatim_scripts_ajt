@@ -1,0 +1,1 @@
+# nominatim_scripts_ajt
