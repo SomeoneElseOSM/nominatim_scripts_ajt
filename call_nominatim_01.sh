@@ -81,6 +81,8 @@ fi
 #
 final_tidy_up()
 {
+    cd /home/${local_filesystem_user}/data/nominatim
+    rm transformed_after.pbf
     cd /home/${local_filesystem_user}/data/
     rm last_modified1.$$
     rm update_nominatim.running
@@ -131,9 +133,12 @@ fi
 # ------------------------------------------------------------------------------
 # Call nominatim itself
 # ------------------------------------------------------------------------------
-echo "Running nominatim"
+echo "Running nominatim - this will take from 5 mins to several hours"
 #
-echo qqq
+systemctl stop nominatim.service
+sudo -u ${local_nominatim_user} sh -c "/home/${local_filesystem_user}/src/nominatim_scripts_ajt/call_nominatim_02.sh"
+systemctl start nominatim.service
+systemctl restart nominatim.service
 #
 # -----------------------------------------------------------------------------
 # And final tidying up.
