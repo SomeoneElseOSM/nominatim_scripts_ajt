@@ -25,18 +25,22 @@ fi
 #
 # While still testing, just use a small area:
 #
-# Four parameters can be set, such as:
+# The first parameter is the name of the transform that we want to run.
+#
+# Four more parameters can be set, such as:
 # europe united-kingdom england north-yorkshire
 # ----------------------------------------------------------------------------
-if [ -z "$4" ]
+transform_name=${1}
+#
+if [ -z "$5" ]
 then
-    if [ -z "$3" ]
+    if [ -z "$4" ]
     then
-	if [ -z "$2" ]
+	if [ -z "$3" ]
 	then
-	    if [ -z "$1" ]
+	    if [ -z "$2" ]
 	    then
-		echo "1-4 arguments needed (continent, country, state, region).  No arguments passed - exiting"
+		echo "2-5 arguments needed (continent, country, state, region).  No arguments passed - exiting"
 		rm update_nominatim.running
 		exit 1
 	    else
@@ -44,7 +48,7 @@ then
 		# Sensible options here might be "antarctica" or possibly "central-america".
 		# ----------------------------------------------------------------------
 		echo "1 argument passed - processing a continent"
-		file_prefix1=${1}
+		file_prefix1=${2}
 		file_page1=http://download.geofabrik.de/${file_prefix1}.html
 		file_url1=http://download.geofabrik.de/${file_prefix1}-latest.osm.pbf
 	    fi
@@ -53,26 +57,26 @@ then
 	    # Sensible options here might be e.g. "europe" and "albania".
 	    # ----------------------------------------------------------------------
 	    echo "2 arguments passed - processing a continent and a country"
-	    file_prefix1=${2}
-	    file_page1=http://download.geofabrik.de/${1}/${file_prefix1}.html
-	    file_url1=http://download.geofabrik.de/${1}/${file_prefix1}-latest.osm.pbf
+	    file_prefix1=${3}
+	    file_page1=http://download.geofabrik.de/${2}/${file_prefix1}.html
+	    file_url1=http://download.geofabrik.de/${2}/${file_prefix1}-latest.osm.pbf
 	fi
     else
 	# ----------------------------------------------------------------------
 	# Sensible options here might be e.g. "europe" "united-kingdom" and "england".
 	# ----------------------------------------------------------------------
 	echo "3 arguments passed - processing a continent, a country and a subregion"
-	file_prefix1=${3}
-	file_page1=http://download.geofabrik.de/${1}/${2}/${file_prefix1}.html
-	file_url1=http://download.geofabrik.de/${1}/${2}/${file_prefix1}-latest.osm.pbf
+	file_prefix1=${4}
+	file_page1=http://download.geofabrik.de/${2}/${3}/${file_prefix1}.html
+	file_url1=http://download.geofabrik.de/${2}/${3}/${file_prefix1}-latest.osm.pbf
     fi
 else
     # ----------------------------------------------------------------------
     # Sensible options here might be e.g. "europe" "united-kingdom", "england" and "bedfordshire"
     # ----------------------------------------------------------------------
     echo "3 arguments passed - processing a continent, a country and a subregion"
-    file_prefix1=${4}
-    file_page1=http://download.geofabrik.de/${1}/${2}/${3}/${file_prefix1}.html
+    file_prefix1=${5}
+    file_page1=http://download.geofabrik.de/${2}/${3}/${4}/${file_prefix1}.html
     file_url1=http://download.geofabrik.de/${1}/${2}/${3}/${file_prefix1}-latest.osm.pbf
 fi
 
@@ -122,7 +126,7 @@ cd nominatim
 # ------------------------------------------------------------------------------
 # Run osm-tags-transform
 # ------------------------------------------------------------------------------
-if /home/${local_filesystem_user}/src/osm-tags-transform/build/src/osm-tags-transform -c /home/${local_filesystem_user}/src/nominatim_scripts_ajt/ntransform_01.lua ../${file_prefix1}_${file_extension1}.osm.pbf -O -o transformed_after.pbf
+if /home/${local_filesystem_user}/src/osm-tags-transform/build/src/osm-tags-transform -c /home/${local_filesystem_user}/src/nominatim_scripts_ajt/${transform_name}.lua ../${file_prefix1}_${file_extension1}.osm.pbf -O -o transformed_after.pbf
 then
     echo Transform OK
 else
