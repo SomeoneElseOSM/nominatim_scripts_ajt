@@ -25,15 +25,27 @@
 -- ----------------------------------------------------------------------------
 function process_all( objtype, object )
 
-    if (( object.tags["admin_level"] == "5" ) or
-        ( object.tags["admin_level"] == "6" )) then
+    if ((( object.tags["admin_level"] == "5" )  or
+         ( object.tags["admin_level"] == "6" )) and
+        (( object.tags["place"]       == nil )  or
+         ( object.tags["place"]       == ""  ))) then
         object.tags["admin_level"] = nil
         object.tags["boundary"] = nil
     end
 
     if ( object.tags["boundary"] == "traditional" ) then
-        object.tags["admin_level"] = "6"
-	object.tags["boundary"] = "administrative"
+        if (( object.tags["name"] == "East Riding of Yorkshire"  ) or
+            ( object.tags["name"] == "North Riding of Yorkshire" ) or
+            ( object.tags["name"] == "West Riding of Yorkshire"  ) or
+            ( object.tags["name"] == "Parts of Holland"          ) or
+            ( object.tags["name"] == "Parts of Kesteven"         ) or
+            ( object.tags["name"] == "Parts of Lindsey"          )) then
+            object.tags["admin_level"] = "8"
+        else
+            object.tags["admin_level"] = "6"
+        end
+
+        object.tags["boundary"] = "administrative"
     end
 
     return object
