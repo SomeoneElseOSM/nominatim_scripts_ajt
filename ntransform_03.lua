@@ -17,7 +17,9 @@
 -- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -- ----------------------------------------------------------------------------
 -- ----------------------------------------------------------------------------
--- Apply "name" transformations to ways for "map style 03"
+-- Apply transformations to ways for "nominatim place style 03"
+--
+-- In each case here all objects are passed through "process_all".
 -- ----------------------------------------------------------------------------
 
 -- ----------------------------------------------------------------------------
@@ -25,14 +27,34 @@
 -- ----------------------------------------------------------------------------
 function process_all( objtype, object )
 
-    if ((( object.tags["admin_level"] == "5" )  or
-         ( object.tags["admin_level"] == "6" )) and
-        (( object.tags["place"]       == nil )  or
-         ( object.tags["place"]       == ""  ))) then
+-- ----------------------------------------------------------------------------
+-- Here we remove admin_levels 5,6 and 7 for which there is no "place".
+--
+-- This removes:
+-- 5: Various combined authorities in England
+-- https://overpass-turbo.eu/s/2c9Q
+-- 6: Various unitary councils
+-- https://overpass-turbo.eu/s/2c9R
+-- 7: NI super-councils and intra-Dublin admin areas
+-- https://overpass-turbo.eu/s/2c9S
+--
+-- We special-case the City of London, which has no "place" tag and would 
+-- otherwise be removed here.
+-- ----------------------------------------------------------------------------
+    if ((( object.tags["admin_level"] == "5"              )  or
+         ( object.tags["admin_level"] == "6"              )  or
+         ( object.tags["admin_level"] == "7"              )) and
+        (( object.tags["place"]       == nil              )  or
+         ( object.tags["place"]       == ""               )) and
+        (  object.tags["name"]        ~= "City of London"  )) then
         object.tags["admin_level"] = nil
         object.tags["boundary"] = nil
     end
 
+-- ----------------------------------------------------------------------------
+-- Instead, add traditional English counties at 6, and special-case 
+-- Yorkshire Ridings and Parts of Lincolnshire at admin level 8.
+-- ----------------------------------------------------------------------------
     if ( object.tags["boundary"] == "traditional" ) then
         if (( object.tags["name"] == "East Riding of Yorkshire"  ) or
             ( object.tags["name"] == "North Riding of Yorkshire" ) or
@@ -45,6 +67,16 @@ function process_all( objtype, object )
             object.tags["admin_level"] = "6"
         end
 
+        object.tags["boundary"] = "administrative"
+    end
+
+-- ----------------------------------------------------------------------------
+-- Also include the "Six Counties" in Northern Ireland
+-- ----------------------------------------------------------------------------
+    if (( object.tags["boundary"]    == "historic" ) and
+        ( object.tags["admin_level"] == "6"        ) and
+        ( object.tags["place"]       ~= nil        ) and
+        ( object.tags["place"]       ~= ""         )) then
         object.tags["boundary"] = "administrative"
     end
 
