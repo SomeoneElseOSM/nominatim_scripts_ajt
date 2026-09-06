@@ -77,7 +77,7 @@ else
     echo "3 arguments passed - processing a continent, a country and a subregion"
     file_prefix1=${5}
     file_page1=http://download.geofabrik.de/${2}/${3}/${4}/${file_prefix1}.html
-    file_url1=http://download.geofabrik.de/${1}/${2}/${3}/${file_prefix1}-latest.osm.pbf
+    file_url1=http://download.geofabrik.de/${2}/${3}/${4}/${file_prefix1}-latest.osm.pbf
 fi
 
 #
@@ -117,7 +117,8 @@ then
     echo "${file_prefix1} already downloaded"
 else
     echo "Downloading ${file_prefix1}"
-    wget $file_url1 -O ${file_prefix1}_${file_extension1}.osm.pbf --output-file /dev/null
+    echo ${file_url1}
+    wget ${file_url1} -O ${file_prefix1}_${file_extension1}.osm.pbf --output-file /dev/null
 fi
 #
 mkdir -p nominatim
@@ -140,7 +141,7 @@ fi
 echo "Running nominatim - this will take from 5 mins to several hours"
 #
 systemctl stop nominatim.service
-sudo -u ${local_nominatim_user} sh -c "/home/${local_filesystem_user}/src/nominatim_scripts_ajt/call_nominatim_02.sh"
+sudo -u ${local_nominatim_user} bash -c "/home/${local_filesystem_user}/src/nominatim_scripts_ajt/call_nominatim_02.sh"
 systemctl start nominatim.service
 systemctl restart nominatim.service
 #
