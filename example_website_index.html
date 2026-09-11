@@ -1,0 +1,266 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Britain and Ireland Nominatim server</title>
+    <style type="text/css" media="screen">
+  * {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+  }
+
+  body, html {
+    padding: 3px 3px 3px 3px;
+
+    background-color: #D8DBE2;
+
+    font-family: Verdana, sans-serif;
+    font-size: 11pt;
+    text-align: center;
+  }
+
+  div.main_page {
+    position: relative;
+    display: table;
+
+    width: 800px;
+
+    margin-bottom: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px 0px 0px 0px;
+
+    border-width: 2px;
+    border-color: #212738;
+    border-style: solid;
+
+    background-color: #FFFFFF;
+
+    text-align: center;
+  }
+
+  div.page_header {
+    height: 99px;
+    width: 100%;
+
+    background-color: #F5F6F7;
+  }
+
+  div.page_header span {
+    margin: 15px 0px 0px 50px;
+
+    font-size: 180%;
+    font-weight: bold;
+  }
+
+  div.page_header img {
+    margin: 3px 0px 0px 40px;
+
+    border: 0px 0px 0px;
+  }
+
+  div.table_of_contents {
+    clear: left;
+
+    min-width: 200px;
+
+    margin: 3px 3px 3px 3px;
+
+    background-color: #FFFFFF;
+
+    text-align: left;
+  }
+
+  div.table_of_contents_item {
+    clear: left;
+
+    width: 100%;
+
+    margin: 4px 0px 0px 0px;
+
+    background-color: #FFFFFF;
+
+    color: #000000;
+    text-align: left;
+  }
+
+  div.table_of_contents_item a {
+    margin: 6px 0px 0px 6px;
+  }
+
+  div.content_section {
+    margin: 3px 3px 3px 3px;
+
+    background-color: #FFFFFF;
+
+    text-align: left;
+  }
+
+  div.content_section_text {
+    padding: 4px 8px 4px 8px;
+
+    color: #000000;
+    font-size: 100%;
+  }
+
+  div.content_section_text pre {
+    margin: 8px 0px 8px 0px;
+    padding: 8px 8px 8px 8px;
+
+    border-width: 1px;
+    border-style: dotted;
+    border-color: #000000;
+
+    background-color: #F5F6F7;
+
+    font-style: italic;
+  }
+
+  div.content_section_text p {
+    margin-bottom: 6px;
+  }
+
+  div.content_section_text ul, div.content_section_text li {
+    padding: 4px 8px 4px 16px;
+  }
+
+  div.section_header {
+    padding: 3px 6px 3px 6px;
+
+    background-color: #8E9CB2;
+
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 112%;
+    text-align: center;
+  }
+
+  div.section_header_red {
+    background-color: #CD214F;
+  }
+
+  div.section_header_grey {
+    background-color: #9F9386;
+  }
+
+  .floating_element {
+    position: relative;
+    float: left;
+  }
+
+  div.table_of_contents_item a,
+  div.content_section_text a {
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  div.table_of_contents_item a:link,
+  div.table_of_contents_item a:visited,
+  div.table_of_contents_item a:active {
+    color: #000000;
+  }
+
+  div.table_of_contents_item a:hover {
+    background-color: #000000;
+
+    color: #FFFFFF;
+  }
+
+  div.content_section_text a:link,
+  div.content_section_text a:visited,
+   div.content_section_text a:active {
+    background-color: #DCDFE6;
+
+    color: #000000;
+  }
+
+  div.content_section_text a:hover {
+    background-color: #000000;
+
+    color: #DCDFE6;
+  }
+
+  div.validator {
+  }
+    </style>
+  </head>
+  <body>
+    <div class="main_page">
+      <div class="page_header floating_element">
+        <span class="floating_element">
+          Britain and Ireland Nominatim server
+        </span>
+      </div>
+      <div class="content_section floating_element">
+
+
+        <div class="section_header section_header_red">
+          <div id="about"></div>
+          How to use this server
+        </div>
+        <div class="content_section_text">
+          <p>
+	    This server supports search calls like <a href="https://h36.atownsend.org.uk/nominatim/search?q=exton">https://h36.atownsend.org.uk/nominatim/search?q=exton</a> and <a href="https://h36.atownsend.org.uk/nominatim/search?q=52.7,-0.65">https://h36.atownsend.org.uk/nominatim/search?q=52.7,-0.65</a>.
+	    Regions ("admin_level=5") have that "admin_level" removed and Ceremonial Counties are used instead.  Ceremonial counties exist in most of England and parts of Wales.  They will appear in some search results, depending on what other areas are mapped at what admin level.
+          </p>
+
+
+          <p>
+                The server only works over IPV6 and only via https.
+                If you can see this page, you can access it via IPV6.
+		<p>
+		Only data for <a href="https://download.geofabrik.de/europe/united-kingdom.html">United Kingdom</a> has been loaded initially.  It is hoped to increase coverage to include the rest of Ireland later.
+<!--		Only data for <a href="https://download.geofabrik.de/europe/britain-and-ireland.html">Britain and Ireland</a> has been loaded initially. -->
+          </p>
+
+        </div>
+          <div class="section_header">
+	    Usage Policy
+          </div>
+	  <div class="content_section_text">
+	  <p>
+	    Not for commercial use.  If you need a commercial service, look <a href="https://wiki.openstreetmap.org/wiki/Nominatim#Alternatives_/_Third-party_providers">elsewhere</a>.
+	  <p>
+	    Don&#39;t do anything like the "problematic behaviours" listed <a href="https://operations.osmfoundation.org/policies/nominatim/">here</a>.  No scraping.  You must pass a valid user agent.  There is no <a href="https://en.wikipedia.org/wiki/Service-level_agreement">SLA</a>, so don&#39;t complain if it is no longer available (temporarily or permanently).  Downtime is expected for database reloads.  Problematic users will be blocked, and if they <a href="https://en.osm.town/@osm_tech/115968544599864782">obfuscate</a> their origin it will <a href="https://en.wikipedia.org/wiki/Tragedy_of_the_commons">result</a> in the the server no longer being public for everyone else.
+	  </p>
+	  <div>
+        <div class="section_header">
+          <div id="bugs"></div>
+                If I use this server, what will people know about me?
+        </div>
+        <div class="content_section_text">
+          <p>
+            <a href="https://www.openstreetmap.org/user/SomeoneElse">I</a> am the only person that I&#39;ve set up
+	    to have access to this server. If you request data then the normal Linux logs and the Nominatim logs will record the fact.
+	    I can&#39;t comment on who might be watching traffic between you and the server (in Germany).
+	    If you&#39;re particularly worried about people NOT knowing 
+	    I recommend that you set up your own server and serve everything from there instead.
+	  </p>
+	</div>
+        <div class="section_header">
+          <div id="bugs"></div>
+                Reporting Problems
+        </div>
+        <div class="content_section_text">
+          <p>
+            Drop a message to SomeoneElse
+	    via <a href="https://www.openstreetmap.org/messages/new/SomeoneElse">OSM</a/>
+	    or <a href="https://github.com/SomeoneElseOSM/Overpass-API/issues">Github</a>
+
+<!--	    ,
+	    or discuss <a href="https://community.openstreetmap.org/t/overpass-server-for-britain-and-ireland/141900">in the OSM forum</a> -->
+	    .
+          </p>
+        </div>
+
+
+
+
+      </div>
+    </div>
+    <div class="validator">
+    </div>
+  </body>
+</html>
+
